@@ -7,8 +7,24 @@ install alongside system python packages
 
 pip install -r requirements.txt
 
+Notes on application
+
+the application is hard wired for specifc input and output folder names.  you'll need to edit the code BuildIndexes and LoadIndexes to build and load indexes based on your folder structure and preferences
 
 
+Notes on Docker image
+
+the docker image must be launched with the following options:
+    4 Azure environment variables - OPENAI_API_KEY, VERSION, TYPE, and BASE 
+    persistent storage volume mounted for application code, data and indexes
+    application installed to /usr/src/app
+    data and storage folders in /usr/src/files
+
+example -
+docker run --rm -u 0 -p 80:80 --env OPENAI_API_KEY=xxxxxx ^
+--env OPENAI_API_BASE=https://xxxxxxx.openai.azure.com  --env OPENAI_API_VERSION=2022-12-01 --env OPENAI_API_TYPE=azure ^
+-v c:/testing/ai/aihackathon-fileshare:/usr/src/files  -v c:/testing/ai/hackathon23:/usr/src/app ^
+llm-runner
 
 **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
