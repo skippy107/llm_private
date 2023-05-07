@@ -1,15 +1,29 @@
-** You must add documents to the data/mixed folder BEFORE running the application
-** You must run the application once locally to build the indexes. this saves container startup time
+** You must add documents to the data/mixed folder BEFORE running the application. You must also run the application once locally to build the indexes. this saves container startup time
 
 ## Getting Started
 
+This is an example application that indexes a collection of documents and allows the user to query via a simple UI.
+
+The example is written for Azure OpenAI service but it should work against the public OpenAI service as well ( see environment variables below )
+
+You will need an API key and base URL for whatever service you are using
+
+Docker installed if you want to build and deploy the app as a container
+
+Also a working installation of Python v 3.9 or greater. Lower versions may require you to install additional packages.
+
 We recommend pipenv to install separate from system python packages
 
-pipenv install -r requirements.txt
+## Installation
 
-or to install alongside system python packages
+Clone the repo then change into the repo folder and type
 
-pip install -r requirements.txt
+`pipenv install -r requirements.txt`
+
+Or, to install alongside system python packages
+
+`pip install -r requirements.txt`
+
 
 ## Setup Steps & Local use with Python
 - Put documents in the `data/mixed` folder
@@ -18,6 +32,7 @@ pip install -r requirements.txt
   - `OPENAI_API_BASE`
   - `OPENAI_API_VERSION`
   - `OPENAI_API_TYPE`
+  NOTE: If you are using the public OpenAI service, you should only set the OPENAI_API_KEY.
 - Set `using_docker` variable at top of `app.py` to `False`
 - Run the application locally to build the indexes. It takes time.
 - After indexes are built, the application will be ready. Use the specified link to check it out.
