@@ -18,7 +18,7 @@ using_docker=False
 
 server_port=80      # this can remain 80 even if you deploy with a container app service, 443 not needed
 
-username='queryuser'            ## dont use gradio method of authentication for production
+username='queryuser'            ## demo only, dont use gradio method of authentication for production
 password='$qP5*uB8!rN1^tE0&mX'
 
 doc_path = 'data'
