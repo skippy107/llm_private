@@ -6,6 +6,7 @@
 Pipfile
 Pipfile.lock
 flagged/
+index/
 # Node artifact files
 node_modules/
 dist/

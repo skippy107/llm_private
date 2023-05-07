@@ -62,7 +62,7 @@ def BuildIndexes(years, doc_path, index_path, doc_set, all_docs, service_context
         print(f"Performing indexing of uber documents.")
         ## Build the list of documents
         for year in years:
-            year_docs = loader.load_data(file=Path(doc_path + f'/UBER/UBER_{year}.html'), split_documents=False)
+            year_docs = loader.load_data(file=Path(doc_path + f'/uber/UBER_{year}.html'), split_documents=False)
             # insert year metadata into each year
             for d in year_docs:
                 d.extra_info = {"year": year}
@@ -93,24 +93,6 @@ def BuildIndexes(years, doc_path, index_path, doc_set, all_docs, service_context
         mixed_index = GPTVectorStoreIndex.from_documents(doc_set['mixed'], service_context=service_context)
         index_set['mixed'] = mixed_index
         mixed_index.storage_context.persist(persist_dir=index_path + '/mixed')
-
-    ## blake schneider documents
-    #
-    if os.path.exists(index_path + '/blake'):
-        print(f"Skipping indexing for blake.")
-    else:
-        print(f"Performing indexing of blake documents.")
-
-        ## Build the list of documents
-        loader = SimpleDirectoryReader(doc_path + '/blake', recursive=True, exclude_hidden=True)
-        mixed_docs = loader.load_data()
-        doc_set['blake'] = mixed_docs   # add to doc_set for individal indexing by year
-        all_docs.extend(mixed_docs)     # add to the all_docs list for global indexing
-
-        ## Build and persist the blake index
-        mixed_index = GPTVectorStoreIndex.from_documents(doc_set['blake'], service_context=service_context)
-        index_set['blake'] = mixed_index
-        mixed_index.storage_context.persist(persist_dir=index_path + '/blake')
 
     ## all documents
     #
@@ -147,12 +129,6 @@ def LoadIndexes(years, index_path, service_context,index_set ):
         print('index mixed not present in memory, loading now ...')
         storage_context = StorageContext.from_defaults(persist_dir=index_path + '/mixed')
         index_set["mixed"] = load_index_from_storage(storage_context,service_context=service_context)
-
-    ## Load blake index
-    if not('blake' in index_set):
-        print('index blake not present in memory, loading now ...')
-        storage_context = StorageContext.from_defaults(persist_dir=index_path + '/blake')
-        index_set["blake"] = load_index_from_storage(storage_context,service_context=service_context)
 
     ## Load all_docs index
     if not('all_docs' in index_set):

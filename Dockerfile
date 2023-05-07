@@ -1,3 +1,5 @@
+## You must put your own files in the data/mixed folder before building an image
+##
 FROM python:latest
 
 USER root
@@ -16,9 +18,13 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+USER docker
+
 WORKDIR /usr/src/app
 
-COPY llm_utils/ .
+COPY llm_utils/ llm_utils/
+
+COPY index/  index/
 
 COPY app.py .
 
@@ -26,16 +32,12 @@ USER root
 
 WORKDIR /usr/src
 
-RUN mkdir files
+RUN rm requirements.txt
 
-RUN chmod -R 644 .
+# RUN chmod -R 644 .
 
 RUN chown -R docker .
 
-RUN chmod 755 files
-
-RUN chmod 755 app
-
-RUN rm requirements.txt
+USER docker
 
 CMD [ "sh", "-lc","cd /usr/src/app; python3 app.py" ]
