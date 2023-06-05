@@ -1,6 +1,11 @@
 openai
 langchain
 llama_index 
+jupyter
+load_dotenv
 unstructured
 gradio
 pytesseract
+pypdf
+tabulate
+pdf2image
